@@ -1,0 +1,30 @@
+<div class="col-md-12 text-center">
+  <h3>Ingreso Usuario</h3>
+  <hr>
+</div>
+<div class="col-md-6 offset-md-3">
+  <form method="POST" action="/iniciar_sesion">
+    <%= csrf_meta_tags %>
+
+    <div class="form-group">
+      <label>Tipo de Cuenta</label>
+      <select class="form-control" name='login[perfil_id]'>
+        <% Perfil.all.each do |perfil| %>
+          <option value="<%= perfil.id %>" ><%= perfil.nombre.upcase %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleInputEmail1">Username</label>
+      <input type="text" class="form-control" name="login[username]" id="login_username" required>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" name="login[password]" class="form-control" id="user_password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Ingresar</button>
+  </form>
+</div>
+<br><br><br><br><br><br><br>

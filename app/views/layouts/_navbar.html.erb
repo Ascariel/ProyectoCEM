@@ -1,0 +1,57 @@
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="/">Centro de Estudios Montreal</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <% Rails.logger.debug("\n\n ============ #{@current_user&.inspect || 'No hay Usuario Logueado'} =========== \n\n" ) %>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <!-- Left -->
+      <ul class="navbar-nav mr-auto">
+        <% if @current_user.present? %>
+
+          <% if @current_user.es_cem? %>
+            <%= render partial: '/layouts/login_menus/nav_cem'  %>
+          <% elsif @current_user.es_cel? %>
+
+          <% elsif @current_user.es_alumno? %>
+
+          <% elsif @current_user.es_familia? %>
+
+          <% end %>
+        <% end %>
+      </ul>
+
+      <!-- Right -->
+      <ul class="navbar-nav float-left">
+        <% if @current_user.present? %>
+          <li class="nav-item">
+            <a class="nav-link" href="/home">Perfil: <%= @current_user.nombre_perfil %></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/home">Username: <%= @current_user.username %></a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-method="DELETE" href="/logout">Logout</a>
+          </li>
+          <% else %>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/crear_cuenta">Registrarse</a>
+          </li>
+        <% end %>
+      </ul>
+
+    </div>
+  </nav>
+
+  <!-- Error Rendering -->
+  <% flash.each do |key, value| %>
+    <div class="<%= flash_class(key) %>">
+      <%= value %>
+    </div>
+  <% end %>
+<!-- Error Rendering -->

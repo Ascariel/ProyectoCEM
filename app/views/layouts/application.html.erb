@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Centro de Estudios Montreal</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <style type="text/css">
+      body {
+        padding-top: 80px;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="container">
+      <%= render partial: 'layouts/navbar' %>
+
+      <div class="row">
+        <%= yield %>
+      </div>
+    </div>
+
+    <div class="footer">
+      <%= render partial: 'layouts/footer' %>
+    </div>
+
+    <% if content_for?(:javascript) %>
+      <%= yield(:javascript) %>
+    <% end %>
+
+
+    <script type="text/javascript">
+      function show_alerts(){
+        alert = "<%= params[:alert] %>"
+        if (alert == 'login_incorrecto') {
+          swal("Login Incorrecto", 'Nombre de usuario o contraseña invalidos. Intente nuevamente', 'warning')
+        }
+        if (alert == 'login_correcto') {
+          swal("Autenticacion Exitosa", '', 'success')
+        }
+        if (alert == 'cuenta_creada') {
+          swal("Cuenta Creada Exitosamente", '', 'success')
+        }
+        if (alert == 'cuenta_ya_existe') {
+          swal("Usuario Invalido", 'Ya existe un usuario registrado con estos datos', 'warning')
+        }
+        if (alert == 'perfil_incorrecto') {
+          swal("Perfil Incorrecto", 'Los datos ingresados no coinciden con el Perfil seleccionado', 'warning')
+        }
+        if (alert == 'solicitud_actualizada') {
+          swal("Solictud Actualizada!", '', 'success')
+        }
+      }
+      show_alerts()
+    </script>
+
+  </body>
+</html>
