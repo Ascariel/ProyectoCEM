@@ -8,7 +8,7 @@ cursos.each {|curso| Curso.find_or_create_by!(nombre: curso)}
 
 alemania = Pais.find_or_create_by!(nombre: 'Alemania')
 japon = Pais.find_or_create_by!(nombre: 'Japon')
-canada = Pais.find_or_create_by!(nombre: 'Japon')
+canada = Pais.find_or_create_by!(nombre: 'Canada')
 
 
 cem = Cem.find_or_create_by!(nombre: 'CEM', pais_id: canada.id)
@@ -44,3 +44,11 @@ Login.find_or_create_by!(username: 'alumno2', password: 'passpass', actor_id: al
 
 Login.find_or_create_by!(username: 'familia1', password: 'passpass', actor_id: familia1.id,  nombre_tabla_actor: familia1.class.name) { |perfil| perfil.perfil_id = perfil_familia.id }
 Login.find_or_create_by!(username: 'familia2', password: 'passpass', actor_id: familia2.id,  nombre_tabla_actor: familia2.class.name) { |perfil| perfil.perfil_id = perfil_familia.id }
+
+
+ProgramaEstudio.find_or_create_by(nombre: 'Humanidades', pais_id: japon.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
+ProgramaEstudio.find_or_create_by(nombre: 'Humanidades', pais_id: alemania.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
+ProgramaEstudio.find_or_create_by(nombre: 'Cientifico', pais_id: canada.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
+ProgramaEstudio.find_or_create_by(nombre: 'Artistico', pais_id: japon.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
+ProgramaEstudio.find_or_create_by(nombre: 'Cultural', pais_id: canada.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
+ProgramaEstudio.find_or_create_by(nombre: 'Cultural', pais_id: alemania.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
