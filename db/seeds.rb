@@ -1,10 +1,10 @@
 
 
-paises = ['Alemania', 'Japon', 'China', 'Australia', 'Suecia']
-paises.each {|pais| Pais.find_or_create_by!(nombre: pais)}
+nombre_paises = ['Alemania', 'Japon', 'China', 'Australia', 'Suecia']
+paises = nombre_paises.map {|pais| Pais.find_or_create_by!(nombre: pais)}
 
-cursos = ['Algebra', 'Calculo', 'Genetica', 'Estadistica', 'Java', 'Algoritmos', 'Arte', 'Historia']
-cursos.each {|curso| Curso.find_or_create_by!(nombre: curso)}
+nombre_cursos = ['Algebra', 'Calculo', 'Genetica', 'Estadistica', 'Java', 'Algoritmos', 'Arte', 'Historia', 'Biologia', 'Quimica', 'Fisica']
+cursos = nombre_cursos.map {|nombre| Curso.find_or_create_by!(nombre: nombre)}
 
 alemania = Pais.find_or_create_by!(nombre: 'Alemania')
 japon = Pais.find_or_create_by!(nombre: 'Japon')
@@ -45,10 +45,21 @@ Login.find_or_create_by!(username: 'alumno2', password: 'passpass', actor_id: al
 Login.find_or_create_by!(username: 'familia1', password: 'passpass', actor_id: familia1.id,  nombre_tabla_actor: familia1.class.name) { |perfil| perfil.perfil_id = perfil_familia.id }
 Login.find_or_create_by!(username: 'familia2', password: 'passpass', actor_id: familia2.id,  nombre_tabla_actor: familia2.class.name) { |perfil| perfil.perfil_id = perfil_familia.id }
 
+programas = []
+programas << ProgramaEstudio.find_or_create_by(nombre: 'Humanidades Japon', pais_id: japon.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
+programas << ProgramaEstudio.find_or_create_by(nombre: 'Humanidades Alemania', pais_id: alemania.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
+programas << ProgramaEstudio.find_or_create_by(nombre: 'Cientifico Canada', pais_id: canada.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
+programas << ProgramaEstudio.find_or_create_by(nombre: 'Artistico Alemania', pais_id: japon.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
+programas << ProgramaEstudio.find_or_create_by(nombre: 'Cultural Japon', pais_id: canada.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
+programas << ProgramaEstudio.find_or_create_by(nombre: 'Cultural Canada', pais_id: alemania.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
 
-ProgramaEstudio.find_or_create_by(nombre: 'Humanidades', pais_id: japon.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
-ProgramaEstudio.find_or_create_by(nombre: 'Humanidades', pais_id: alemania.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
-ProgramaEstudio.find_or_create_by(nombre: 'Cientifico', pais_id: canada.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
-ProgramaEstudio.find_or_create_by(nombre: 'Artistico', pais_id: japon.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
-ProgramaEstudio.find_or_create_by(nombre: 'Cultural', pais_id: canada.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
-ProgramaEstudio.find_or_create_by(nombre: 'Cultural', pais_id: alemania.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
+programas.each do |programa_estudio|
+  cantidad = rand(4) + 1
+  cursos_a_crear = cursos.sample(cantidad)
+  programa_estudio.reload.programa_cursos.destroy_all
+
+  cursos_a_crear.map { |curso| ProgramaCurso.find_or_create_by!(curso_id: curso.id, programa_estudio_id: programa_estudio.id) }
+end
+
+# nombres
+# programa_estudio.reload.programa_cursos.map(&:curso).map(&:nombre)

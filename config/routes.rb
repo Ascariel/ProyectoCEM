@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'programa_estudio/index'
+  get 'programa_estudio/new'
   get 'home', to: 'home#index'
   root 'home#index'
   # get 'login/new'
@@ -13,4 +15,6 @@ Rails.application.routes.draw do
 
   delete '/logout', to: 'login#logout'
   get '/logout', to: 'login#logout'
+
+  resource :programa_estudio, controller: 'programa_estudio'
 end

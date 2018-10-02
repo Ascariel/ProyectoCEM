@@ -52,9 +52,18 @@
         if (alert == 'perfil_incorrecto') {
           swal("Perfil Incorrecto", 'Los datos ingresados no coinciden con el Perfil seleccionado', 'warning')
         }
-        if (alert == 'solicitud_actualizada') {
-          swal("Solictud Actualizada!", '', 'success')
+        if (alert == 'debe_autenticarse') {
+          swal("Acceso Restringido", 'Debe autenticarse antes de acceder a esta seccion', 'warning')
         }
+        if (alert == 'cantidad_cursos_invalida') {
+          swal("Datos Invalidos", 'Debe seleccionar a lo menos 1 curso', 'warning')
+        }
+        if (alert == 'programa_ya_existe') {
+          swal("Programa Invalido", 'Ya existe un programa registrado con el nombre ingresado', 'warning')
+        }
+
+
+
       }
       show_alerts()
     </script>

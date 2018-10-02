@@ -8,11 +8,13 @@
 
     <div class="form-group">
       <label>Tipo de Cuenta</label>
-      <select class="form-control" name='login[perfil_id]'>
+      <select class="form-control" name='login[perfil_id]' id="selector_perfil">
         <% Perfil.all.each do |perfil| %>
-          <option value="<%= perfil.id %>" ><%= perfil.nombre.upcase %></option>
+          <% selected = perfil.nombre.downcase == @tipo_cuenta  %>
+          <option value="<%= perfil.id %>" id="perfil_id_<%= perfil.id %>" data-tipo-cuenta="<%= perfil.nombre.downcase %>" <%= 'selected' if selected %>  ><%= perfil.nombre.upcase %></option>
         <% end %>
       </select>
+      <input type="hidden" name="login[tipo_cuenta]" value="<%= @tipo_cuenta %>">
     </div>
 
     <div class="form-group">
@@ -25,6 +27,50 @@
       <input class="form-control" name="login[password]" type="password" required>
     </div>
 
+    <hr>
+
+    <!-- Datos Extra Segun Tipo Perfil -->
+    <% if @tipo_cuenta == 'cem' %>
+      <div class="form-group">
+        <label><b>Solo puede existir un CEM, las cuentas creadas aqui permiten loguearse a el con distintos usernames<b></label>
+      </div>
+
+    <% elsif @tipo_cuenta == 'cel' %>
+      <div class="form-group">
+        <label>Nombre CEL</label>
+        <input type="text" class="form-control" name="login[nombre_actor]" id="login_username" required>
+      </div>
+      <div class="form-group">
+        <label>Pais</label>
+        <select class="form-control" name='login[pais_id]'>
+          <% Pais.all.each do |pais| %>
+            <option  value="<%= pais.id %>" ><%= pais.nombre.titleize %></option>
+          <% end %>
+        </select>
+      </div>
+
+    <% elsif @tipo_cuenta == 'alumno' %>
+      <div class="form-group">
+        <label>Nombre Alumno</label>
+        <input type="text" class="form-control" name="login[nombre_actor]" id="login_username" required>
+      </div>
+
+    <% elsif @tipo_cuenta == 'familia' %>
+      <div class="form-group">
+        <label>Nombre Representante Familia</label>
+        <input type="text" class="form-control" name="login[nombre_actor]" id="login_username" required>
+      </div>
+      <div class="form-group">
+        <label>Pais</label>
+        <select class="form-control" name='login[pais_id]'>
+          <% Pais.all.each do |pais| %>
+            <option  value="<%= pais.id %>" ><%= pais.nombre.titleize %></option>
+          <% end %>
+        </select>
+      </div>
+    <% end %>
+
+    <br>
     <div class="text-center">
       <!-- <a href="/login" class="btn btn-secondary">Volver</a> -->
     <button type="submit" class="btn btn-primary">Registrarse</button>
@@ -32,3 +78,20 @@
   </form>
 </div>
 <br><br><br><br><br><br><br>
+
+
+
+<% content_for :javascript do %>
+
+  <script type="text/javascript">
+   $(document).ready( function () {
+      $("#selector_perfil").on('change', function(e){
+        var perfil_id = $("#selector_perfil").val()
+        var id_selector_perfil = '#perfil_id_' + perfil_id
+
+        var tipo_cuenta = $(id_selector_perfil).data('tipo-cuenta')
+        window.location = '?tipo_cuenta=' + tipo_cuenta
+      })
+    });
+  </script>
+<% end %>

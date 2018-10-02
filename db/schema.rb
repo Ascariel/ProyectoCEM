@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_01_030620) do
+ActiveRecord::Schema.define(version: 2018_10_02_053616) do
 
   create_table "alumnos", force: :cascade do |t|
     t.string "nombre"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2018_10_01_030620) do
   create_table "familia", force: :cascade do |t|
     t.string "nombre"
     t.integer "cel_id"
+    t.integer "pais_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -69,6 +70,13 @@ ActiveRecord::Schema.define(version: 2018_10_01_030620) do
 
   create_table "perfils", force: :cascade do |t|
     t.string "nombre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "programa_cursos", force: :cascade do |t|
+    t.integer "curso_id"
+    t.integer "programa_estudio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,0 +1,67 @@
+<div class="col-md-12 text-center">
+  <h3>Crear Programa de Estudios</h3>
+  <hr>
+</div>
+
+<div class="col-md-6 offset-md-3">
+  <form method="POST" action="/programa_estudio">
+
+    <div class="form-group">
+      <label>Nombre Programa</label>
+      <input type="text" class="form-control" name="nombre"  required>
+    </div>
+
+    <div class="form-group">
+      <label>Pais</label>
+      <select class="form-control" name='pais_id'>
+        <% Pais.all.each do |pais| %>
+          <option  value="<%= pais.id %>" ><%= pais.nombre.titleize %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Cupos Maximos</label>
+      <input type="text" class="form-control" name="max_cupos" value="50"  required>
+    </div>
+
+    <div class="form-group">
+      <label>Cupos Minimos</label>
+      <input type="text" class="form-control" name="min_cupos" value="10"  required>
+    </div>
+
+    <div class="form-group">
+      <label>Cursos Disponibles</label>
+      <br>
+      <% Curso.all.each do |curso| %>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" name="cursos[curso_id_<%= curso.id %>]" value="<%= curso.id %>" class="form-check-input"> <%= curso.nombre %><br>
+        </div>
+      <% end %>
+    </div>
+
+    <br>
+    <div class="text-center">
+      <!-- <a href="/login" class="btn btn-secondary">Volver</a> -->
+    <button type="submit" class="btn btn-primary">Crear Programa</button>
+    </div>
+  </form>
+</div>
+<br><br><br><br><br><br><br>
+
+
+
+<% content_for :javascript do %>
+
+  <script type="text/javascript">
+   $(document).ready( function () {
+      $("#selector_perfil").on('change', function(e){
+        var perfil_id = $("#selector_perfil").val()
+        var id_selector_perfil = '#perfil_id_' + perfil_id
+
+        var tipo_cuenta = $(id_selector_perfil).data('tipo-cuenta')
+        window.location = '?tipo_cuenta=' + tipo_cuenta
+      })
+    });
+  </script>
+<% end %>

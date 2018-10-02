@@ -4,13 +4,45 @@ class LoginController < ApplicationController
   def login
   end
 
-  def create
-    login = Login.find_by(username: login_params[:username])
-    cem = Cem.first
-    perfil = Perfil.find_by(nombre: 'CEM')
-    return redirect_to '/crear_cuenta?alert=cuenta_ya_existe' if login.present?
+  def crear_cuenta
+    @tipo_cuenta = params[:tipo_cuenta] || 'cem'
 
-    login = Login.create!(username: login_params[:username], password: login_params[:password], actor_id: cem.id,  nombre_tabla_actor: cem.class.name, perfil_id: perfil.id)
+    # if tipo_cuenta == 'familia'
+    #   @
+    # end
+  end
+
+  def create
+    # return render json: login_params.to_h
+
+    login = Login.find_by(username: login_params[:username])
+    url_cuenta_ya_existe = "/crear_cuenta?tipo_cuenta=#{login_params[:tipo_cuenta]}&alert=cuenta_ya_existe"
+    return redirect_to url_cuenta_ya_existe if login.present?
+
+    perfil = Perfil.find(login_params[:perfil_id])
+
+    if perfil.es_cem?
+      actor = Cem.first
+
+    elsif perfil.es_cel?
+      cel = Cel.find_by(nombre: login_params[:nombre_actor])
+      return redirect_to url_cuenta_ya_existe if cel.present?
+
+      actor = Cel.create!(nombre: login_params[:nombre_actor], pais_id: login_params[:pais_id])
+    elsif perfil.es_alumno?
+      alumno = Alumno.find_by(nombre: login_params[:nombre_actor])
+      return redirect_to url_cuenta_ya_existe if alumno.present?
+
+      actor = Alumno.create!(nombre: login_params[:nombre_actor], codigo_alumno: SecureRandom.base58(10).upcase)
+    elsif perfil.es_familia?
+      familia = Familia.find_by(nombre: login_params[:nombre_actor])
+      return redirect_to url_cuenta_ya_existe if familia.present?
+
+      actor = Familia.create!(nombre: login_params[:nombre_actor], pais_id: login_params[:pais_id])
+    end
+
+
+    login = Login.create!(username: login_params[:username], password: login_params[:password], actor_id: actor.id,  nombre_tabla_actor: actor.class.name, perfil_id: perfil.id)
     session[:logged_user] = login
     session[:perfil] = login.perfil.nombre
     return redirect_to '/?alert=cuenta_creada'
@@ -26,11 +58,11 @@ class LoginController < ApplicationController
 
     session[:logged_user] = login
     session[:perfil] = login.perfil.nombre
-    return redirect_to '/?alert=login_correcto'
+    return redirect_to '/programa_estudio/index?alert=login_correcto'
   end
 
   def login_params
-    params.require(:login).permit(:email, :password, :username, :perfil_id)
+    params.require(:login).permit(:email, :password, :username, :perfil_id, :pais_id, :tipo_cuenta, :nombre_actor)
   end
 
   def logout
