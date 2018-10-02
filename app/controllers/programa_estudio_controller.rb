@@ -18,10 +18,6 @@ class ProgramaEstudioController < ApplicationController
     cursos = Curso.where(id: curso_ids)
     cursos.each { |curso| ProgramaCurso.create!(curso_id: curso.id, programa_estudio_id: programa_estudio.id) }
 
-    return redirect_to '/programa_estudio/index'
+    return redirect_to '/programa_estudio/index?alert=programa_creado'
   end
-
-  # def login_params
-  #   params.require(:login).permit(:email, :password, :username, :perfil_id, :pais_id, :tipo_cuenta, :nombre_actor)
-  # end
 end
