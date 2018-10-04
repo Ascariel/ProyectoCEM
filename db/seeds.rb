@@ -52,10 +52,10 @@ Login.find_or_create_by!(username: 'familia2', password: 'passpass', actor_id: f
 programas = []
 programas << ProgramaEstudio.find_or_create_by(nombre: 'Humanidades Japon', pais_id: japon.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
 programas << ProgramaEstudio.find_or_create_by(nombre: 'Humanidades Alemania', pais_id: alemania.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
-programas << ProgramaEstudio.find_or_create_by(nombre: 'Cientifico Canada', pais_id: canada.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
 programas << ProgramaEstudio.find_or_create_by(nombre: 'Artistico Alemania', pais_id: japon.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
 programas << ProgramaEstudio.find_or_create_by(nombre: 'Cultural Japon', pais_id: canada.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
-programas << ProgramaEstudio.find_or_create_by(nombre: 'Cultural Canada', pais_id: alemania.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
+programas << p_canada2 = ProgramaEstudio.find_or_create_by(nombre: 'Cultural Canada', pais_id: alemania.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
+programas << p_canada1 = ProgramaEstudio.find_or_create_by(nombre: 'Cientifico Canada', pais_id: canada.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
 
 programas.each do |programa_estudio|
   cantidad = rand(4) + 1
@@ -65,8 +65,8 @@ programas.each do |programa_estudio|
   cursos_a_crear.map { |curso| ProgramaCurso.find_or_create_by!(curso_id: curso.id, programa_estudio_id: programa_estudio.id) }
 end
 
-ProgramaCel.find_or_create_by!(cel_id: cel.id, programa_estudio_id: ProgramaEstudio.first.id)
-ProgramaCel.find_or_create_by!(cel_id: cel.id, programa_estudio_id: ProgramaEstudio.last.id)
+ProgramaCel.find_or_create_by!(cel_id: cel.id, programa_estudio_id: p_canada1.id)
+ProgramaCel.find_or_create_by!(cel_id: cel.id, programa_estudio_id: p_canada2.id)
 
 # nombres
 # programa_estudio.reload.programa_cursos.map(&:curso).map(&:nombre)
