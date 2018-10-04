@@ -16,7 +16,11 @@ Rails.application.routes.draw do
   delete '/logout', to: 'login#logout'
   get '/logout', to: 'login#logout'
 
+  post '/postulacion_cel_programa', to: 'programas_cel#create'
+  post '/eliminar_cel_programa', to: 'programas_cel#destroy'
+
+
   resources :programas_estudio
-  resources :programa_cels
+  # resources :programa_cels
   # resources :photos
 end

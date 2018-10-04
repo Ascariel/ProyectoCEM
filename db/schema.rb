@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(version: 2018_10_04_021242) do
   create_table "programa_cels", force: :cascade do |t|
     t.integer "programa_estudio_id"
     t.integer "cel_id"
-    t.integer "estado"
+    t.integer "estado", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

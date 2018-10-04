@@ -31,7 +31,7 @@
 
   </thead>
   <tbody>
-    <% ProgramaEstudio.all.each do |programa| %>
+    <% @programas_estudio.each do |programa| %>
       <tr>
         <td><%= programa.id %></td>
         <td><%= programa.nombre.titleize %></td>

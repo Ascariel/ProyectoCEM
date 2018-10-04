@@ -1,9 +1,20 @@
 class ProgramasEstudioController < ApplicationController
   def index
+    @programas_estudio = ProgramaEstudio.all
+
+    if @current_user.es_cel?
+      cel = @current_user.cel
+      @programas_estudio = @programas_estudio.where(pais_id: cel.pais_id)
+    end
   end
 
   def show
     @programa_estudio = ProgramaEstudio.find(params[:id])
+
+    if @current_user.es_cel?
+      cel = @current_user.cel
+      @programa_cel = cel.programa_cels.find_by(programa_estudio_id: @programa_estudio.id)
+    end
   end
 
   def new
@@ -39,7 +50,7 @@ class ProgramasEstudioController < ApplicationController
 
     cursos = Curso.where(id: curso_ids)
     cursos.each { |curso| ProgramaCurso.create!(curso_id: curso.id, programa_estudio_id: @programa_estudio.id) }
-    binding.pry
+
     @programa_estudio.update!(programa_estudio_params)
     redirect_to "#{programas_estudio_index_path}?alert=editado"
   end

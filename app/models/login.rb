@@ -22,4 +22,10 @@ class Login < ApplicationRecord
   def es_familia?
     perfil.nombre == 'FAMILIA'
   end
+
+  def cel
+    return nil if es_cel?.blank?
+
+    Cel.find(actor_id)
+  end
 end

@@ -12,7 +12,7 @@ canada = Pais.find_or_create_by!(nombre: 'Canada')
 
 
 cem = Cem.find_or_create_by!(nombre: 'CEM', pais_id: canada.id)
-cel = Cel.find_or_create_by!(nombre: 'CEL Canada', pais_id: canada.id)
+cel = Cel.find_or_create_by!(nombre: 'CEL Default Canada', pais_id: canada.id)
 
 cel_japon1 = Cel.find_or_create_by!(nombre: 'CEL Japon 1', pais_id: japon.id)
 cel_japon2 = Cel.find_or_create_by!(nombre: 'CEL Japon 2', pais_id: japon.id)
@@ -64,6 +64,9 @@ programas.each do |programa_estudio|
 
   cursos_a_crear.map { |curso| ProgramaCurso.find_or_create_by!(curso_id: curso.id, programa_estudio_id: programa_estudio.id) }
 end
+
+ProgramaCel.find_or_create_by!(cel_id: cel.id, programa_estudio_id: ProgramaEstudio.first.id)
+ProgramaCel.find_or_create_by!(cel_id: cel.id, programa_estudio_id: ProgramaEstudio.last.id)
 
 # nombres
 # programa_estudio.reload.programa_cursos.map(&:curso).map(&:nombre)
