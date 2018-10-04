@@ -1,0 +1,86 @@
+
+
+<div class="col-md-12 text-center">
+  <h3>Programas de Estudio Asociados CEL</h3>
+  <br><br>
+</div>
+
+<br>
+
+<table id="projects_table" class="table table-striped table-hover " style="margin-top: 20px">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre Programa</th>
+      <th>Pais</th>
+      <th>Duracion</th>
+      <th>Cupos Max</th>
+      <th>Cupos Min</th>
+      <th>Cursos Incluidos</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+
+
+      <th></th>
+    </tr>
+
+  </thead>
+  <tbody>
+    <% @programas_cel.each do |programa_cel| %>
+      <tr>
+        <% programa = programa_cel.programa_estudio %>
+
+        <td><%= programa.id %></td>
+        <td><%= programa.nombre.titleize %></td>
+        <td><%= programa.pais.nombre.titleize %></td>
+        <td><%= programa.duracion.upcase %></td>
+        <td><%= programa.max_cupos %></td>
+        <td><%= programa.min_cupos %></td>
+        <td><%= programa_cel.estado.upcase %></td>
+        <td>
+          <select class="form-control" name='pais_id'>
+            <option selected >Cursos Asociados</option>
+            <% programa.programa_cursos.each do |programa_curso| %>
+              <option><%= programa_curso.curso.nombre.titleize %></option>
+            <% end %>
+          </select>
+        </td>
+
+        <!-- ACCIONES SEGUN PERFIL -->
+          <% if @current_user.es_cem? %>
+            <td>
+              <a href="/programas_estudio/<%= programa.id %>" data-method="DELETE" class="btn btn-danger btn-sm">Eliminar</a>
+              <a href="/programas_estudio/<%= programa.id %>/edit" class="btn btn-warning btn-sm">Editar</a>
+              <a href="/programas_estudio/<%= programa.id %>" class="btn btn-info btn-sm ">Ver</a>
+            </td>
+          <% elsif @current_user.es_cel? %>
+            <td>
+              <a href="/programas_estudio/<%= programa.id %>" class="btn btn-info btn-sm btn-block ">Ver</a>
+            </td>
+          <% elsif @current_user.es_alumno? %>
+
+          <% elsif @current_user.es_familia? %>
+
+          <% end %>
+
+
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br><br><br><br><br><br><br>
+
+
+
+<% content_for :javascript do %>
+
+  <script type="text/javascript">
+//    $(document).ready( function () {
+        //$('#projects_table').DataTable({
+          //dom: 'f'
+        //});
+    //});
+  </script>
+<% end %>

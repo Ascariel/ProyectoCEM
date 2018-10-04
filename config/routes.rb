@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   post '/postulacion_cel_programa', to: 'programas_cel#create'
   post '/eliminar_cel_programa', to: 'programas_cel#destroy'
+  get '/programas_cel', to: 'programas_cel#index'
 
 
   resources :programas_estudio

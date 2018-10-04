@@ -1,4 +1,12 @@
 class ProgramasCelController < ApplicationController
+
+  def index
+    @programas_cel = ProgramaCel.all
+    if @current_user.es_cel?
+      @programas_cel = @current_user.cel.programa_cels
+    end
+  end
+
   def create
     programa_estudio = ProgramaEstudio.find(params[:programa_estudio_id])
     cel = Cel.find(params[:cel_id])
