@@ -7,7 +7,7 @@
 
 <% if @current_user&.es_cem? %>
   <div class="col-md-12">
-    <a href="/programa_estudio/new" class="btn btn-success btn-sm float-left">Ingresar Nuevo Programa</a>
+    <a href="/programas_estudio/new" class="btn btn-success btn-sm float-left">Ingresar Nuevo Programa</a>
   </div>
 <% end %>
 
@@ -23,6 +23,7 @@
       <th>Cupos Max</th>
       <th>Cupos Min</th>
       <th>Cursos Incluidos</th>
+      <th>Acciones</th>
 
 
       <th></th>
@@ -46,11 +47,26 @@
             <% end %>
           </select>
         </td>
-        <td>
-<!--           <a href="/programas/<%= programa.id %>" data-method="DELETE" class="btn btn-danger btn-sm">Eliminar</a>
-          <a href="/programas/edit/<%= programa.id %>" class="btn btn-warning btn-sm">Editar</a> -->
-          <a href="/programa_estudio/<%= programa.id %>/show" class="btn btn-info btn-sm btn-block">Ver</a>
-        </td>
+
+        <!-- ACCIONES SEGUN PERFIL -->
+          <% if @current_user.es_cem? %>
+            <td>
+              <a href="/programas_estudio/<%= programa.id %>" data-method="DELETE" class="btn btn-danger btn-sm">Eliminar</a>
+              <a href="/programas_estudio/<%= programa.id %>/edit" class="btn btn-warning btn-sm">Editar</a>
+              <a href="/programas_estudio/<%= programa.id %>" class="btn btn-info btn-sm ">Ver</a>
+            </td>
+          <% elsif @current_user.es_cel? %>
+            <td>
+              <a href="/programas_estudio/<%= programa.id %>" class="btn btn-info btn-sm btn-block ">Ver</a>
+            </td>
+          <% elsif @current_user.es_alumno? %>
+
+          <% elsif @current_user.es_familia? %>
+
+          <% end %>
+
+
+
       </tr>
     <% end %>
   </tbody>

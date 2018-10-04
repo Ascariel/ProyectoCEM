@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class AlumnoTest < ActiveSupport::TestCase
+class ProgramaCelTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

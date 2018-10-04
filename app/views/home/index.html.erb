@@ -1,7 +1,7 @@
 
 
 <div class="col-md-12 text-center">
-  <h3>Listado de Programas de Estudio</h3>
+  <h3><%= 'vista default temporal:'.upcase %> Listado de Programas de Estudio</h3>
   <br><br>
 </div>
 
@@ -37,7 +37,7 @@
         <td>
 <!--           <a href="/programas/<%= programa.id %>" data-method="DELETE" class="btn btn-danger btn-sm">Eliminar</a>
           <a href="/programas/edit/<%= programa.id %>" class="btn btn-warning btn-sm">Editar</a> -->
-          <a href="/programas/<%= programa.id %>/show" class="btn btn-info btn-sm btn-block">Ver</a>
+          <a href="/programas_estudio/<%= programa.id %>" class="btn btn-info btn-sm btn-block">Ver</a>
         </td>
       </tr>
     <% end %>

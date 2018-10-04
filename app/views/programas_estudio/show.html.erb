@@ -1,0 +1,105 @@
+<div class="col-md-12 text-center">
+  <h3>Detalles Programa de Estudios</h3>
+  <hr>
+</div>
+
+<div class="col-md-6 offset-md-3">
+    <div class="form-group">
+      <label>Nombre Programa</label>
+      <input type="text" class="form-control" name="nombre" value="<%= @programa_estudio.nombre %>"  required disabled>
+    </div>
+
+    <div class="form-group">
+      <label>Pais</label>
+      <select class="form-control" name='pais_id' disabled>
+          <option ><%= @programa_estudio.pais.nombre.titleize %></option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-6">
+        <div class="form-group">
+          <label>Cupos Maximos</label>
+          <input type="text" class="form-control" name="max_cupos" value="<%= @programa_estudio.max_cupos %>"  required disabled>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6">
+        <div class="form-group">
+          <label>Cupos Minimos</label>
+          <input type="text" class="form-control" name="min_cupos" value="<%= @programa_estudio.min_cupos %>"  required disabled>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Cursos Disponibles</label>
+      <br>
+      <% @programa_estudio.programa_cursos.each do |programa_curso| %>
+        <% curso = programa_curso.curso %>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" checked name="cursos[curso_id_<%= curso.id %>]" disabled class="form-check-input"> <%= curso.nombre %><br>
+        </div>
+      <% end %>
+    </div>
+
+    <% if @current_user.es_cel? %>
+      <div class="form-group">
+        <a href="" id="postular" data-cel-id="<%= @current_user.id %>" data-programa-id="<%= @programa_estudio.id %>" class="btn btn-success btn-md btn-block">Postular a Programa</a>
+      </div>
+    <% end %>
+
+    <div class="text-center">
+      <!-- <a href="/login" class="btn btn-secondary">Volver</a> -->
+    <a href="/programas_estudio" class="btn btn-primary btn-md btn-block">Volver</a>
+    </div>
+  <br><br><br><br><br><br><br>
+</div>
+
+
+
+
+<% content_for :javascript do %>
+
+  <script type="text/javascript">
+   $(document).ready( function () {
+      $("#selector_perfil").on('change', function(e){
+        var perfil_id = $("#selector_perfil").val()
+        var id_selector_perfil = '#perfil_id_' + perfil_id
+
+        var tipo_cuenta = $(id_selector_perfil).data('tipo-cuenta')
+        window.location = '?tipo_cuenta=' + tipo_cuenta
+      })
+    });
+
+   $('#postular').on('click', function(event) {
+     event.preventDefault();
+     /* Act on the event */
+
+     var btn_postular = $(event.currentTarget)
+     var cel_id = btn_postular.data('cel-id')
+     var programa_estudio_id = btn_postular.data('programa-id')
+
+     console.log(programa_estudio_id)
+     // return
+
+     $.ajax({
+       url: '/postulacion_cel_programa',
+       type: 'POST',
+       data: {cel_id: cel_id, programa_estudio_id: programa_estudio_id},
+     })
+     .done(function() {
+       console.log("success");
+     })
+     .fail(function() {
+       console.log("error");
+     })
+     .always(function() {
+       console.log("complete");
+     });
+
+   });
+
+
+  </script>
+<% end %>

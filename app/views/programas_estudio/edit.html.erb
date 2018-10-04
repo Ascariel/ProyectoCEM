@@ -1,0 +1,73 @@
+<div class="col-md-12 text-center">
+  <h3>Detalles Programa de Estudios</h3>
+  <hr>
+</div>
+
+<div class="col-md-6 offset-md-3">
+  <form method="POST" action="/programas_estudio/<%= @programa_estudio.id %>">
+    <input name="_method" type="hidden" value="patch" />
+    <div class="form-group">
+      <label>Nombre Programa</label>
+      <input type="text" class="form-control" name="programa_estudio[nombre]" value="<%= @programa_estudio.nombre %>"  required >
+    </div>
+
+    <div class="form-group">
+      <label>Pais</label>
+      <select class="form-control" name='programa_estudio[pais_id]'>
+        <% Pais.all.each do |pais| %>
+          <% mark_selected = 'selected' if @programa_estudio.pais == pais.id  %>
+          <option value="<%= pais.id %>" <%= mark_selected %> ><%= pais.nombre.titleize %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-6">
+        <div class="form-group">
+          <label>Cupos Maximos</label>
+          <input type="text" class="form-control" name="programa_estudio[max_cupos]" value="<%= @programa_estudio.max_cupos %>"  required >
+        </div>
+      </div>
+
+      <div class="form-group col-md-6">
+        <div class="form-group">
+          <label>Cupos Minimos</label>
+          <input type="text" class="form-control" name="programa_estudio[min_cupos]" value="<%= @programa_estudio.min_cupos %>"  required >
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Cursos Disponibles</label>
+      <br>
+      <% Curso.all.each do |curso| %>
+        <% is_checked = @programa_estudio.programa_cursos.map(&:curso_id).include?(curso.id) %>
+        <% mark_checked =  'checked' if is_checked %>
+
+        <div class="form-check form-check-inline">
+          <input type="checkbox" name="cursos[curso_id_<%= curso.id %>]" value="<%= curso.id %>" class="form-check-input" <%= mark_checked %> > <%= curso.nombre %><br>
+        </div>
+      <% end %>
+    </div>
+
+    <button type="submit" href="/programas_estudio" class="btn btn-primary btn-md btn-block">Editar</button>
+  </form>
+</div>
+
+
+
+
+<% content_for :javascript do %>
+
+  <script type="text/javascript">
+   $(document).ready( function () {
+      $("#selector_perfil").on('change', function(e){
+        var perfil_id = $("#selector_perfil").val()
+        var id_selector_perfil = '#perfil_id_' + perfil_id
+
+        var tipo_cuenta = $(id_selector_perfil).data('tipo-cuenta')
+        window.location = '?tipo_cuenta=' + tipo_cuenta
+      })
+    });
+  </script>
+<% end %>

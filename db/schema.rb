@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_02_053616) do
+ActiveRecord::Schema.define(version: 2018_10_04_021242) do
 
   create_table "alumnos", force: :cascade do |t|
     t.string "nombre"
@@ -70,6 +70,14 @@ ActiveRecord::Schema.define(version: 2018_10_02_053616) do
 
   create_table "perfils", force: :cascade do |t|
     t.string "nombre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "programa_cels", force: :cascade do |t|
+    t.integer "programa_estudio_id"
+    t.integer "cel_id"
+    t.integer "estado"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

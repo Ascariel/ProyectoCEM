@@ -58,7 +58,7 @@ class LoginController < ApplicationController
 
     session[:logged_user] = login
     session[:perfil] = login.perfil.nombre
-    return redirect_to '/programa_estudio/index?alert=login_correcto'
+    return redirect_to '/programas_estudio?alert=login_correcto'
   end
 
   def login_params

@@ -12,10 +12,12 @@ canada = Pais.find_or_create_by!(nombre: 'Canada')
 
 
 cem = Cem.find_or_create_by!(nombre: 'CEM', pais_id: canada.id)
+cel = Cel.find_or_create_by!(nombre: 'CEL Canada', pais_id: canada.id)
+
 cel_japon1 = Cel.find_or_create_by!(nombre: 'CEL Japon 1', pais_id: japon.id)
 cel_japon2 = Cel.find_or_create_by!(nombre: 'CEL Japon 2', pais_id: japon.id)
 cel_alemania1 = Cel.find_or_create_by!(nombre: 'CEL Alemania 1', pais_id: alemania.id)
-cel_alemania2 =Cel.find_or_create_by!(nombre: 'CEL Alemania 2', pais_id: alemania.id)
+cel_alemania2 = Cel.find_or_create_by!(nombre: 'CEL Alemania 2', pais_id: alemania.id)
 
 perfil_cem = Perfil.find_or_create_by!(nombre: 'CEM')
 perfil_cel = Perfil.find_or_create_by!(nombre: 'CEL')
@@ -32,6 +34,8 @@ alumno2 = Alumno.find_or_create_by!(codigo_alumno: 'alumno3'){ |alumno|  alumno.
 alumno2 = Alumno.find_or_create_by!(codigo_alumno: 'alumno4'){ |alumno|  alumno.nombre = 'Angel' }
 
 Login.find_or_create_by!(username: 'cem', password: 'passpass', actor_id: cem.id,  nombre_tabla_actor: cem.class.name) { |perfil| perfil.perfil_id = perfil_cem.id }
+Login.find_or_create_by!(username: 'cel', password: 'passpass', actor_id: cel.id,  nombre_tabla_actor: cel.class.name) { |perfil| perfil.perfil_id = perfil_cel.id }
+
 
 Login.find_or_create_by!(username: 'cel_japon1', password: 'passpass', actor_id: cel_japon1.id,  nombre_tabla_actor: cel_japon1.class.name) { |perfil| perfil.perfil_id = perfil_cel.id }
 Login.find_or_create_by!(username: 'cel_japon2', password: 'passpass', actor_id: cel_japon2.id,  nombre_tabla_actor: cel_japon2.class.name) { |perfil| perfil.perfil_id = perfil_cel.id }

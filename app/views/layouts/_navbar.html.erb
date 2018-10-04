@@ -14,7 +14,7 @@
           <% if @current_user.es_cem? %>
             <%= render partial: '/layouts/login_menus/nav_cem'  %>
           <% elsif @current_user.es_cel? %>
-
+            <%= render partial: '/layouts/login_menus/nav_cel'  %>
           <% elsif @current_user.es_alumno? %>
 
           <% elsif @current_user.es_familia? %>
