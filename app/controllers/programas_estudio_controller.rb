@@ -3,8 +3,9 @@ class ProgramasEstudioController < ApplicationController
     @programas_estudio = ProgramaEstudio.all
 
     if @current_user.es_cel?
-      cel = @current_user.cel
-      @programas_estudio = @programas_estudio.where(pais_id: cel.pais_id)
+      # ======== Deshabilitado Temporalmente
+      # cel = @current_user.cel
+      # @programas_estudio = @programas_estudio.where(pais_id: cel.pais_id)
     end
   end
 

@@ -1,4 +1,6 @@
-
+# rails db:drop
+# rails db:migrate
+# rails db:seed
 
 nombre_paises = ['Alemania', 'Japon', 'China', 'Australia', 'Suecia']
 paises = nombre_paises.map {|pais| Pais.find_or_create_by!(nombre: pais)}
@@ -24,14 +26,18 @@ perfil_cel = Perfil.find_or_create_by!(nombre: 'CEL')
 perfil_alumno = Perfil.find_or_create_by!(nombre: 'ALUMNO')
 perfil_familia = Perfil.find_or_create_by!(nombre: 'FAMILIA')
 
-familia1 = Familia.find_or_create_by!(nombre: 'Familia en Japon 1', cel_id: cel_japon1.id)
-familia2 = Familia.find_or_create_by!(nombre: 'Familia en Japon 2', cel_id: cel_japon1.id)
-familia3 = Familia.find_or_create_by!(nombre: 'Familia en Alemania 1', cel_id: cel_alemania1.id)
+familia1 = Familia.find_or_create_by!(nombre: 'Familia en Japon 1', cel_id: cel_japon1.id, pais_id: japon.id, estado_postulacion_cel: 1)
+familia2 = Familia.find_or_create_by!(nombre: 'Familia en Japon 2', cel_id: cel_japon1.id, pais_id: japon.id, estado_postulacion_cel: 1)
+familia3 = Familia.find_or_create_by!(nombre: 'Familia en Japon 3', cel_id: cel_japon1.id, pais_id: japon.id, estado_postulacion_cel: 2)
 
-alumno1 = Alumno.find_or_create_by!(codigo_alumno: 'alumno1'){ |alumno|  alumno.nombre = 'Pablo' }
-alumno2 = Alumno.find_or_create_by!(codigo_alumno: 'alumno2'){ |alumno|  alumno.nombre = 'Paulina' }
-alumno2 = Alumno.find_or_create_by!(codigo_alumno: 'alumno3'){ |alumno|  alumno.nombre = 'Jairo' }
-alumno2 = Alumno.find_or_create_by!(codigo_alumno: 'alumno4'){ |alumno|  alumno.nombre = 'Angel' }
+familia4 = Familia.find_or_create_by!(nombre: 'Familia en Alemania 1', cel_id: nil, pais_id: alemania.id, estado_postulacion_cel: 0)
+familia5 = Familia.find_or_create_by!(nombre: 'Familia en Alemania 2', cel_id: nil, pais_id: alemania.id, estado_postulacion_cel: 0)
+familia6 = Familia.find_or_create_by!(nombre: 'Familia en Japon 4', cel_id: nil, pais_id: japon.id, estado_postulacion_cel: 0)
+
+alumno1 = Alumno.find_or_create_by!(codigo_alumno: 'alumno1'){ |alumno|  alumno.nombre = 'Pablo'; alumno.apellido = 'C.'; alumno.edad = (rand(10) + 28) }
+alumno2 = Alumno.find_or_create_by!(codigo_alumno: 'alumno2'){ |alumno|  alumno.nombre = 'Paulina'; alumno.apellido = 'V.'; alumno.edad = (rand(10) + 28) }
+alumno2 = Alumno.find_or_create_by!(codigo_alumno: 'alumno3'){ |alumno|  alumno.nombre = 'Jairo'; alumno.apellido = 'J.'; alumno.edad = (rand(10) + 28) }
+alumno2 = Alumno.find_or_create_by!(codigo_alumno: 'alumno4'){ |alumno|  alumno.nombre = 'Angel'; alumno.apellido = 'A.'; alumno.edad = (rand(10) + 28) }
 
 Login.find_or_create_by!(username: 'cem', password: 'passpass', actor_id: cem.id,  nombre_tabla_actor: cem.class.name) { |perfil| perfil.perfil_id = perfil_cem.id }
 Login.find_or_create_by!(username: 'cel', password: 'passpass', actor_id: cel.id,  nombre_tabla_actor: cel.class.name) { |perfil| perfil.perfil_id = perfil_cel.id }
@@ -54,7 +60,7 @@ programas << ProgramaEstudio.find_or_create_by(nombre: 'Humanidades Japon', pais
 programas << ProgramaEstudio.find_or_create_by(nombre: 'Humanidades Alemania', pais_id: alemania.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
 programas << ProgramaEstudio.find_or_create_by(nombre: 'Artistico Alemania', pais_id: japon.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
 programas << ProgramaEstudio.find_or_create_by(nombre: 'Cultural Japon', pais_id: canada.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
-programas << p_canada2 = ProgramaEstudio.find_or_create_by(nombre: 'Cultural Canada', pais_id: alemania.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
+programas << p_canada2 = ProgramaEstudio.find_or_create_by(nombre: 'Cultural Canada', pais_id: canada.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
 programas << p_canada1 = ProgramaEstudio.find_or_create_by(nombre: 'Cientifico Canada', pais_id: canada.id, max_cupos: 50, min_cupos: 20, duracion: 'normal')
 
 programas.each do |programa_estudio|

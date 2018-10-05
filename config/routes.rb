@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+  get 'familias/index'
   # Home/Index es un placeholder que muestra todos los programas sin requerir login
   # get 'home', to: 'home#index'
   root 'home#index'
@@ -20,8 +21,18 @@ Rails.application.routes.draw do
   post '/eliminar_cel_programa', to: 'programas_cel#destroy'
   get '/programas_cel', to: 'programas_cel#index'
 
+  get '/cels/postulaciones_familias', to: 'cels#postulaciones_familias'
+  post '/cels/postulacion_familia_cel', to: 'cels#postulacion_familia_cel'
+  post '/cels/eliminar_postulacion_familia_cel', to: 'cels#eliminar_postulacion_familia_cel'
+
+  get 'familias/:id/postulacion_familia_cel', to: 'familias#postulacion_familia_cel'
+
 
   resources :programas_estudio
+  resources :programas_cel
+  resources :alumnos
+  resources :cels
+  resources :familias
   # resources :programa_cels
   # resources :photos
 end

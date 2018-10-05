@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2018_10_04_021242) do
   create_table "alumnos", force: :cascade do |t|
     t.string "nombre"
     t.string "apellido"
+    t.integer "edad"
     t.string "codigo_alumno"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -47,6 +48,7 @@ ActiveRecord::Schema.define(version: 2018_10_04_021242) do
     t.string "nombre"
     t.integer "cel_id"
     t.integer "pais_id"
+    t.integer "estado_postulacion_cel", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

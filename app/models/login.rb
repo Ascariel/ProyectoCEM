@@ -28,4 +28,10 @@ class Login < ApplicationRecord
 
     Cel.find(actor_id)
   end
+
+  def familia
+    return nil if es_familia?.blank?
+
+    Familia.find(actor_id)
+  end
 end

@@ -1,0 +1,67 @@
+
+
+<div class="col-md-12 text-center">
+  <h3>Familias</h3>
+  <br><br>
+</div>
+
+<br>
+
+<table id="projects_table" class="table table-striped table-hover " style="margin-top: 20px">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Pais</th>
+      <th>Cel Asociado</th>
+      <th>Telefono</th>
+
+      <th>Acciones</th>
+
+
+      <th></th>
+    </tr>
+
+  </thead>
+  <tbody>
+    <% @familias.each do |familia| %>
+      <tr>
+
+        <td><%= familia.id %></td>
+        <td><%= familia.nombre.titleize %></td>
+        <td><%= familia.pais.nombre.titleize %></td>
+        <td><%= familia&.cel.nombre&.titleize || 'Libre' %></td>        
+        <td><%= "#{(rand(60) + 10)}-#{rand(9000000) + 1000000000}" %></td>
+
+
+        <!-- ACCIONES SEGUN PERFIL -->
+          <% if @current_user.es_cem? %>
+            <td>
+              <a href="/familias/<%= familia.id %>" data-method="DELETE" class="btn btn-danger btn-sm">Eliminar</a>
+              <a href="/familias/<%= familia.id %>/edit" class="btn btn-warning btn-sm">Editar</a>
+              <a href="/familias/<%= familia.id %>" class="btn btn-info btn-sm ">Ver</a>
+            </td>
+          <% end %>
+
+
+
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br><br><br><br><br><br><br>
+
+
+
+<% content_for :javascript do %>
+
+  <script type="text/javascript">
+//    $(document).ready( function () {
+        //$('#projects_table').DataTable({
+          //dom: 'f'
+        //});
+    //});
+  </script>
+<% end %>

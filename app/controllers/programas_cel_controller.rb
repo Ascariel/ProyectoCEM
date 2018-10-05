@@ -7,6 +7,12 @@ class ProgramasCelController < ApplicationController
     end
   end
 
+  def show
+    @programa_cel = ProgramaCel.find(params[:id])
+    @programa_estudio = @programa_cel.programa_estudio
+    @cel = @programa_cel.cel
+  end
+
   def create
     programa_estudio = ProgramaEstudio.find(params[:programa_estudio_id])
     cel = Cel.find(params[:cel_id])

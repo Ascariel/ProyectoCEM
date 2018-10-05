@@ -16,9 +16,9 @@
           <% elsif @current_user.es_cel? %>
             <%= render partial: '/layouts/login_menus/nav_cel'  %>
           <% elsif @current_user.es_alumno? %>
-
+            <%= render partial: '/layouts/login_menus/nav_alumno'  %>
           <% elsif @current_user.es_familia? %>
-
+            <%= render partial: '/layouts/login_menus/nav_familia'  %>
           <% end %>
         <% end %>
       </ul>

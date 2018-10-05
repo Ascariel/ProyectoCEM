@@ -11,13 +11,13 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Nombre Programa</th>
+      <th>Programa</th>
+      <th>CEL</th>
       <th>Pais</th>
       <th>Duracion</th>
-      <th>Cupos Max</th>
-      <th>Cupos Min</th>
-      <th>Cursos Incluidos</th>
+      <th>Cupos</th>
       <th>Estado</th>
+      <th>Cursos Incluidos</th>
       <th>Acciones</th>
 
 
@@ -32,10 +32,10 @@
 
         <td><%= programa.id %></td>
         <td><%= programa.nombre.titleize %></td>
+        <td><%= programa_cel.cel.nombre.titleize %></td>
         <td><%= programa.pais.nombre.titleize %></td>
         <td><%= programa.duracion.upcase %></td>
-        <td><%= programa.max_cupos %></td>
-        <td><%= programa.min_cupos %></td>
+        <td><%= programa.max_cupos %>/<%= programa.min_cupos %></td>
         <td><%= programa_cel.estado.upcase %></td>
         <td>
           <select class="form-control" name='pais_id'>
@@ -58,7 +58,9 @@
               <a href="/programas_estudio/<%= programa.id %>" class="btn btn-info btn-sm btn-block ">Ver</a>
             </td>
           <% elsif @current_user.es_alumno? %>
-
+            <td>
+              <a href="/programas_cel/<%= programa_cel.id %>" class="btn btn-info btn-sm btn-block ">Ver</a>
+            </td>
           <% elsif @current_user.es_familia? %>
 
           <% end %>

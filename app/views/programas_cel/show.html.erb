@@ -1,5 +1,5 @@
 <div class="col-md-12 text-center">
-  <h3>Detalles Programa de Estudios</h3>
+  <h3>Anfitrion: CEL <%= @cel.nombre.titleize %></h3>
   <hr>
 </div>
 
@@ -14,6 +14,18 @@
       <select class="form-control" name='pais_id' disabled>
           <option ><%= @programa_estudio.pais.nombre.titleize %></option>
       </select>
+    </div>
+
+    <div class="form-group">
+      <label>Familias Asociadas</label>
+      <br>
+      <input type="text" class="form-control" value="No Hay Familias Asociadas" required disabled <%= 'hidden' if @cel.familias.present? %>>      
+      <% @cel.familias.each do |familia| %>
+
+        <div class="form-check form-check-inline">
+          <input type="checkbox" checked disabled class="form-check-input"> <%= familia.nombre %><br>
+        </div>
+      <% end %>
     </div>
 
     <div class="row">
@@ -42,18 +54,6 @@
         </div>
       <% end %>
     </div>
-
-    <div class="form-group">
-      <label>Centros de Estudio Disponibles</label>
-      <br>
-      <% @programa_estudio.programa_cels.each do |programa_cel| %>
-        <% cel = programa_cel.cel %>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" checked  disabled class="form-check-input"> <%= cel.nombre %><br>
-        </div>
-      <% end %>
-    </div>
-    <br>
 
     <% if @current_user.es_cel? %>
       <% if @programa_cel.present? %>

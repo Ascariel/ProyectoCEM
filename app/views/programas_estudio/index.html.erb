@@ -17,16 +17,14 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Nombre Programa</th>
+      <th>Programa</th>
       <th>Pais</th>
       <th>Duracion</th>
-      <th>Cupos Max</th>
-      <th>Cupos Min</th>
+      <th>Cupos</th>
+      <th>CELs</th>
       <th>Cursos Incluidos</th>
       <th>Acciones</th>
 
-
-      <th></th>
     </tr>
 
   </thead>
@@ -37,11 +35,11 @@
         <td><%= programa.nombre.titleize %></td>
         <td><%= programa.pais.nombre.titleize %></td>
         <td><%= programa.duracion.upcase %></td>
-        <td><%= programa.max_cupos %></td>
-        <td><%= programa.min_cupos %></td>
+        <td><%= programa.max_cupos %>/<%= programa.min_cupos %></td>
+        <td><%= programa.programa_cels.count%></td>
         <td>
           <select class="form-control" name='pais_id'>
-            <option selected >Cursos Asociados</option>
+            <option selected >Ver Listado</option>
             <% programa.programa_cursos.each do |programa_curso| %>
               <option><%= programa_curso.curso.nombre.titleize %></option>
             <% end %>
@@ -60,9 +58,13 @@
               <a href="/programas_estudio/<%= programa.id %>" class="btn btn-info btn-sm btn-block ">Ver</a>
             </td>
           <% elsif @current_user.es_alumno? %>
-
+            <td>
+              <a href="/programas_estudio/<%= programa.id %>" class="btn btn-info btn-sm btn-block ">Ver</a>
+            </td>
           <% elsif @current_user.es_familia? %>
-
+            <td>
+              <a href="/programas_estudio/<%= programa.id %>" class="btn btn-info btn-sm btn-block ">Ver</a>
+            </td>
           <% end %>
 
 

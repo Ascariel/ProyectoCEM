@@ -1,0 +1,126 @@
+<div class="col-md-12 text-center">
+  <h3>Detalles CEL</h3>
+  <hr>
+</div>
+
+<div class="col-md-6 offset-md-3">
+    <div class="form-group">
+      <label>Nombre CEL</label>
+      <input type="text" class="form-control" name="nombre" value="<%= @cel.nombre %>"  required disabled>
+    </div>
+
+    <div class="form-group">
+      <label>Pais</label>
+      <select class="form-control" name='pais_id' disabled>
+          <option ><%= @cel.pais.nombre.titleize %></option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Familias Asociadas</label>
+      <br>
+      <% @cel.familias.each do |familia| %>
+
+        <div class="form-check form-check-inline">
+          <input type="checkbox" checked disabled class="form-check-input"> <%= familia.nombre %><br>
+        </div>
+      <% end %>
+    </div>
+
+    <% if @current_user.es_familia? %>
+      <% if @familia.present? && @familia.cel_id == @cel.id %>
+        <div class="">
+          <div class="row">
+            <div class="form-group col-md-12">
+              <label>Estado Postulacion:</label>
+              <select class="form-control" name='pais_id' disabled>
+                <option ><%= @familia.estado_postulacion_cel.upcase %></option>
+              </select>
+            </div>
+            <div class="form-group col-md-12">
+              <a href="" id="eliminar_postulacion" data-familia-id="<%= @familia.id %>" class="btn btn-danger btn-md btn-block">Eliminar Postulacion</a>
+            </div>
+
+            <!-- <hr> -->
+
+          </div>
+        </div>
+      <% else %>
+        <div class="form-group">
+          <a href="" id="postular" data-cel-id="<%= @cel.id %>" data-familia-id="<%= @familia.id %>" class="btn btn-success btn-md btn-block">Postular a CEL</a>
+        </div>
+      <% end %>
+
+    <% end %>
+
+    <div class="text-center">
+      <!-- <a href="/login" class="btn btn-secondary">Volver</a> -->
+    <a href="/programas_estudio" class="btn btn-primary btn-md btn-block">Volver</a>
+    </div>
+  <br><br><br><br><br><br><br>
+</div>
+
+
+
+
+<% content_for :javascript do %>
+
+  <script type="text/javascript">
+
+   $('#postular').on('click', function(event) {
+     event.preventDefault();
+     /* Act on the event */
+
+     var btn_postular = $(event.currentTarget)
+     var cel_id = btn_postular.data('cel-id')
+     var familia_id = btn_postular.data('familia-id')
+
+     $.ajax({
+       url: '/cels/postulacion_familia_cel',
+       type: 'POST',
+       data: {cel_id: cel_id, familia_id: familia_id},
+     })
+     .done(function(response) {
+       console.log("success");
+       window.location = '?alert=postulacion_exitosa'
+     })
+     .fail(function(response) {
+       console.log("error");
+       console.log(response);
+     })
+     .always(function(response) {
+       console.log(response['responseText']);
+     });
+
+   });
+
+   $('#eliminar_postulacion').on('click', function(event) {
+     event.preventDefault();
+     /* Act on the event */
+
+     var btn_eliminar = $(event.currentTarget)
+     var familia_id = btn_eliminar.data('familia-id')
+
+
+     $.ajax({
+       url: '/cels/eliminar_postulacion_familia_cel',
+       type: 'POST',
+       data: {familia_id: familia_id},
+     })
+     .done(function(response) {
+       console.log("success");
+       window.location = '?alert=postulacion_eliminada'
+     })
+     .fail(function(response) {
+       console.log("error");
+       console.log(response);
+     })
+     .always(function(response) {
+       console.log(response['responseText']);
+     });
+
+   });
+
+
+  </script>
+<% end %>
